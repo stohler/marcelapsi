@@ -95,7 +95,97 @@
     window.addEventListener("scroll", onScroll, { passive: true });
   }
 
+  function parseInstagram(url) {
+    if (!url) return null;
+    var match = String(url).match(/instagram\.com\/(reel|p|tv)\/([A-Za-z0-9_-]+)/i);
+    if (!match) return null;
+    return { kind: match[1].toLowerCase(), code: match[2] };
+  }
+
+  function embedUrl(kind, code) {
+    return (
+      "https://www.instagram.com/" +
+      encodeURIComponent(kind) +
+      "/" +
+      encodeURIComponent(code) +
+      "/embed"
+    );
+  }
+
+  function permalink(kind, code) {
+    return "https://www.instagram.com/" + kind + "/" + encodeURIComponent(code) + "/";
+  }
+
+  function loadReelFrame(card) {
+    if (!card || card.getAttribute("data-loaded") === "1") return;
+    var code = card.getAttribute("data-code");
+    var kind = card.getAttribute("data-kind") || "p";
+    if (!code) return;
+    card.setAttribute("data-loaded", "1");
+    var frame = document.createElement("iframe");
+    frame.src = embedUrl(kind, code);
+    frame.title = "Publicação de " + (site.instagramHandle || "Instagram");
+    frame.loading = "lazy";
+    frame.setAttribute("allowtransparency", "true");
+    frame.setAttribute("scrolling", "no");
+    frame.setAttribute("allow", "autoplay; clipboard-write; encrypted-media; picture-in-picture");
+    frame.referrerPolicy = "strict-origin-when-cross-origin";
+    card.appendChild(frame);
+    card.classList.add("is-loaded");
+  }
+
+  function renderInstagram() {
+    var grid = document.getElementById("reels");
+    if (!grid) return;
+
+    var raw = site.instagramReels || [];
+    var posts = [];
+    for (var i = 0; i < raw.length && posts.length < 3; i++) {
+      var parsed = parseInstagram(raw[i] && raw[i].url ? raw[i].url : raw[i]);
+      if (parsed) posts.push(parsed);
+    }
+
+    if (!posts.length) {
+      grid.innerHTML =
+        '<a class="reel reel-fallback" href="' +
+        (site.instagram || "https://www.instagram.com/marcelastohlerpsi/") +
+        '" target="_blank" rel="noopener noreferrer">' +
+        '<span class="reel-play" aria-hidden="true"></span>' +
+        "<span>Ver os vídeos no Instagram</span>" +
+        "</a>";
+      return;
+    }
+
+    var html = "";
+    for (var k = 0; k < posts.length; k++) {
+      html +=
+        '<article class="reel" data-kind="' +
+        posts[k].kind +
+        '" data-code="' +
+        posts[k].code +
+        '">' +
+        '<a class="reel-open" href="' +
+        permalink(posts[k].kind, posts[k].code) +
+        '" target="_blank" rel="noopener noreferrer">Abrir no Instagram</a>' +
+        '<button class="reel-gate" type="button" aria-label="Assistir publicação">' +
+        '<span class="reel-play" aria-hidden="true"></span>' +
+        "</button>" +
+        "</article>";
+    }
+    grid.innerHTML = html;
+
+    var gates = grid.querySelectorAll(".reel-gate");
+    for (var g = 0; g < gates.length; g++) {
+      gates[g].addEventListener("click", function (ev) {
+        var card = ev.currentTarget.parentNode;
+        ev.currentTarget.remove();
+        loadReelFrame(card);
+      });
+    }
+  }
+
   loadAds();
   bindLinks();
   headerScroll();
+  renderInstagram();
 })();

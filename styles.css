@@ -511,6 +511,113 @@ p {
   max-width: 40rem;
 }
 
+.reels {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  padding: 0.25rem 0 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.reel {
+  position: relative;
+  flex: 0 0 min(260px, 74vw);
+  aspect-ratio: 9 / 16;
+  border-radius: var(--radius);
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(30, 107, 79, 0.2), rgba(31, 42, 36, 0.55)),
+    var(--sand);
+  box-shadow: var(--shadow);
+  scroll-snap-align: center;
+  color: #fff;
+}
+
+.reel iframe {
+  position: absolute;
+  left: 50%;
+  top: -48px;
+  width: 330px;
+  height: 780px;
+  border: 0;
+  transform: translateX(-50%);
+  background: #fafafa;
+}
+
+.reel-gate,
+.reel-fallback {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  font: inherit;
+  font-weight: 600;
+}
+
+.reel-fallback {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.reel-fallback:hover {
+  color: #fff;
+}
+
+.reel-play {
+  width: 3.4rem;
+  height: 3.4rem;
+  border-radius: 50%;
+  background: rgba(255, 253, 249, 0.94);
+  box-shadow: 0 10px 24px rgba(31, 42, 36, 0.2);
+  position: relative;
+}
+
+.reel-play::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 54%;
+  width: 0;
+  height: 0;
+  border-style: solid;
+  border-width: 0.55rem 0 0.55rem 0.9rem;
+  border-color: transparent transparent transparent var(--emerald);
+  transform: translate(-50%, -50%);
+}
+
+.reel-open {
+  position: absolute;
+  z-index: 2;
+  right: 0.7rem;
+  bottom: 0.7rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #fff;
+  text-decoration: none;
+  background: rgba(31, 42, 36, 0.45);
+  padding: 0.28rem 0.55rem;
+  border-radius: 999px;
+}
+
+.reel.is-loaded .reel-open {
+  background: rgba(31, 42, 36, 0.62);
+}
+
+.reels-more {
+  margin-top: 0.25rem;
+}
+
 @media (max-width: 900px) {
   .nav,
   .header-cta,

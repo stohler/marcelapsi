@@ -12,6 +12,12 @@ window.SITE = {
   instagramHandle: "@marcelastohlerpsi",
   columnUrl: "https://ocp.news/autor/marcela-stohler-2",
   columnTitle: "Toda criança agitada tem TDAH?",
+  // Posts públicos do Instagram (até 3). O player só carrega depois do clique.
+  instagramReels: [
+    "https://www.instagram.com/p/DctQ_phuqEb/",
+    "https://www.instagram.com/p/DcWndA7qjDh/",
+    "https://www.instagram.com/p/DcSHrPZiCTQ/",
+  ],
   // Google Ads: preencha quando a campanha existir. Vazio = nenhum script do Google.
   ads: {
     measurementId: "",

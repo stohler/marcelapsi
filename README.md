@@ -41,13 +41,28 @@ O clique em qualquer botão de WhatsApp dispara `generate_lead` e, se o label es
 
 Parâmetros `utm_source`, `utm_medium` e `utm_campaign` entram na mensagem pré-preenchida do WhatsApp.
 
+## Reels do Instagram
+
+O widget oficial do Instagram pesa o visual e o Google Ads. Esta página usa cartões nativos: o iframe só entra **depois do clique**.
+
+Cole até 3 links em [`site.config.js`](site.config.js):
+
+```js
+instagramReels: [
+  "https://www.instagram.com/reel/XXXXXXXXXXX/",
+  "https://www.instagram.com/reel/YYYYYYYYYYY/",
+]
+```
+
+O Instagram não libera “os últimos vídeos” automaticamente sem app da Meta. Sem esses links, a faixa aponta só para [@marcelastohlerpsi](https://www.instagram.com/marcelastohlerpsi/).
+
 ## Arquivos
 
 | Arquivo | Função |
 | --- | --- |
 | `index.html` | Landing |
 | `privacidade.html` | Política curta (LGPD / Ads) |
-| `site.config.js` | WhatsApp, CRP, Instagram, IDs do Ads |
+| `site.config.js` | WhatsApp, CRP, Instagram, Reels, IDs do Ads |
 | `main.js` | Link `wa.me` + conversão |
 | `styles.css` | Layout |
 | `images/` | Retrato, OG, ilustrações |
