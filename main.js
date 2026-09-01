@@ -41,7 +41,7 @@
     var ads = site.ads || {};
     var id = ads.measurementId || ads.conversionId;
     if (!id || !window.document) return;
-    if (window.dataLayer && window.gtag) return;
+    if (typeof window.gtag === "function") return;
 
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () {

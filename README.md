@@ -25,19 +25,21 @@ Push na `main` = produção. Pull request = URL de preview.
 
 Documentação: [Custom domains no Pages](https://developers.cloudflare.com/pages/configuration/custom-domains/).
 
-## Google Ads (quando a campanha existir)
+## Google Analytics e Ads
 
-Em [`site.config.js`](site.config.js), preencha:
+A tag GA4 `G-QYJ2FSZW7E` já está no `<head>` de todas as páginas.
+
+Quando existir conversão do Google Ads, preencha em [`site.config.js`](site.config.js):
 
 ```js
 ads: {
-  measurementId: "AW-XXXXXXXXX",
+  measurementId: "G-QYJ2FSZW7E",
   conversionId: "AW-XXXXXXXXX",
   conversionLabel: "abcDEFghijk",
 }
 ```
 
-O clique em qualquer botão de WhatsApp dispara `generate_lead` e, se o label estiver preenchido, o evento `conversion`. Enquanto os campos estiverem vazios, nenhum script do Google é carregado.
+O clique em qualquer botão de WhatsApp dispara `generate_lead` e, se o label estiver preenchido, o evento `conversion`.
 
 Parâmetros `utm_source`, `utm_medium` e `utm_campaign` entram na mensagem pré-preenchida do WhatsApp.
 

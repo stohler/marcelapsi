@@ -18,9 +18,8 @@ window.SITE = {
     "https://www.instagram.com/p/DcWndA7qjDh/",
     "https://www.instagram.com/p/DcSHrPZiCTQ/",
   ],
-  // Google Ads: preencha quando a campanha existir. Vazio = nenhum script do Google.
   ads: {
-    measurementId: "",
+    measurementId: "G-QYJ2FSZW7E",
     conversionId: "",
     conversionLabel: "",
   },
