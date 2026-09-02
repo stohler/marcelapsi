@@ -20,7 +20,7 @@ window.SITE = {
   ],
   ads: {
     measurementId: "G-QYJ2FSZW7E",
-    conversionId: "",
-    conversionLabel: "",
+    conversionId: "AW-709897997",
+    conversionLabel: "jTcQCKqvhe0cEI3ewNIC",
   },
 };
