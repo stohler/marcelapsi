@@ -39,20 +39,43 @@
 
   function loadAds() {
     var ads = site.ads || {};
-    var id = ads.measurementId || ads.conversionId;
-    if (!id || !window.document) return;
-    if (typeof window.gtag === "function") return;
+    var ids = [];
+    if (ads.measurementIds && ads.measurementIds.length) {
+      for (var i = 0; i < ads.measurementIds.length; i++) {
+        if (ads.measurementIds[i]) ids.push(ads.measurementIds[i]);
+      }
+    } else {
+      if (ads.measurementId) ids.push(ads.measurementId);
+      if (ads.measurementIdExtra) ids.push(ads.measurementIdExtra);
+    }
+    var primary = ids[0] || ads.conversionId;
+    if (!primary || !window.document) return;
+
+    // HTML already loads gtag + configs the primary ID; only add extras.
+    if (typeof window.gtag === "function") {
+      for (var e = 1; e < ids.length; e++) {
+        window.gtag("config", ids[e]);
+      }
+      return;
+    }
 
     window.dataLayer = window.dataLayer || [];
     window.gtag = function () {
       window.dataLayer.push(arguments);
     };
     window.gtag("js", new Date());
-    window.gtag("config", id);
+    if (ids.length) {
+      for (var k = 0; k < ids.length; k++) {
+        window.gtag("config", ids[k]);
+      }
+    } else {
+      window.gtag("config", primary);
+    }
 
     var script = document.createElement("script");
     script.async = true;
-    script.src = "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(id);
+    script.src =
+      "https://www.googletagmanager.com/gtag/js?id=" + encodeURIComponent(primary);
     document.head.appendChild(script);
   }
 
